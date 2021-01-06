@@ -13,4 +13,9 @@ public class PetClinicController {
         return "Welcome";
     }
 
+    @RequestMapping("/")
+    public String indexPage() {
+        return "index";
+    }
+
 }
