@@ -20,7 +20,7 @@ public class OwnerRepositoryInMemoryImpl implements OwnerRepository {
         Owner owner2 = new Owner();
         owner2.setId(2L);
         owner2.setFirstName("Arturo");
-        owner2.setLastName("Kim");
+        owner2.setLastName("Marquez");
 
         Owner owner3 = new Owner();
         owner3.setId(3L);
