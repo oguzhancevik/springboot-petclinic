@@ -30,7 +30,11 @@ public class PetClinicServiceImpl implements PetClinicService {
 
     @Override
     public Owner findOwner(Long id) throws OwnerNotFoundException {
-        return ownerRepository.findById(id);
+        Owner owner = ownerRepository.findById(id);
+        if (owner == null) {
+            throw new OwnerNotFoundException("Owner not found with id :" + id);
+        }
+        return owner;
     }
 
     @Override
