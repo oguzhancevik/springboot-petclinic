@@ -4,6 +4,9 @@ import io.github.oguzhancevik.springbootpetclinic.exception.OwnerNotFoundExcepti
 import io.github.oguzhancevik.springbootpetclinic.model.Owner;
 import io.github.oguzhancevik.springbootpetclinic.service.PetClinicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,10 +41,15 @@ public class PetClinicRestController {
     }
 
     @GetMapping("/owner/{id}")
-    public ResponseEntity<Owner> getOwner(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getOwner(@PathVariable("id") Long id) {
         try {
             Owner owner = petClinicService.findOwner(id);
-            return ResponseEntity.ok(owner);
+            Link self = WebMvcLinkBuilder.linkTo(PetClinicRestController.class).slash("/owner/" + id).withSelfRel();
+            Link create = WebMvcLinkBuilder.linkTo(PetClinicRestController.class).slash("/owner").withRel("create");
+            Link update = WebMvcLinkBuilder.linkTo(PetClinicRestController.class).slash("/owner/" + id).withRel("update");
+            Link delete = WebMvcLinkBuilder.linkTo(PetClinicRestController.class).slash("/owner/" + id).withRel("delete");
+            EntityModel<Owner> resource = new EntityModel<>(owner, self, create, update, delete);
+            return ResponseEntity.ok(resource);
         } catch (OwnerNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
