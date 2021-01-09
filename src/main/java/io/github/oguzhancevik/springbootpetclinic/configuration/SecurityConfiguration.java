@@ -10,8 +10,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/**/favicon.ico", "/css/**", "js/**", "/images/**").permitAll()
+                .antMatchers("/**/favicon.ico", "/css/**", "js/**", "/images/**", "/login").permitAll()
                 .anyRequest().authenticated();
-        http.formLogin();
+
+        http.formLogin().loginPage("/login").failureUrl("/login?loginFailed=true");
     }
 }

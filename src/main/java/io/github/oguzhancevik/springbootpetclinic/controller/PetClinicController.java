@@ -18,4 +18,9 @@ public class PetClinicController {
         return "index";
     }
 
+    @RequestMapping("/login")
+    public String loginPage(){
+        return "login";
+    }
+
 }
