@@ -24,11 +24,9 @@ public class PetClinicRestControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Value("${spring.security.user.name}")
-    private String USER_NAME;
+    private final String USER_NAME = "admin";
 
-    @Value("${spring.security.user.password}")
-    private String PASSWORD;
+    private final String PASSWORD = "my-secret-password";
 
     @BeforeEach
     public void setUp() {
