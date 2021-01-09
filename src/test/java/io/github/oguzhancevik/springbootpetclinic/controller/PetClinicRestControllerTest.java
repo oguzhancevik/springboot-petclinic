@@ -3,11 +3,9 @@ package io.github.oguzhancevik.springbootpetclinic.controller;
 import io.github.oguzhancevik.springbootpetclinic.model.Owner;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpMethod;
@@ -25,6 +23,17 @@ public class PetClinicRestControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @Value("${spring.security.user.name}")
+    private String USER_NAME;
+
+    @Value("${spring.security.user.password}")
+    private String PASSWORD;
+
+    @BeforeEach
+    public void setUp() {
+        restTemplate = restTemplate.withBasicAuth(USER_NAME, PASSWORD);
+    }
 
     @Test
     @Order(1)
@@ -60,10 +69,12 @@ public class PetClinicRestControllerTest {
         Owner owner = new Owner();
         owner.setFirstName("Gregory");
         owner.setLastName("Alvarado");
-        URI uri = restTemplate.postForLocation(restTemplate.getRootUri() + "/api/owner", owner);
-        Owner owner2 = restTemplate.getForObject(uri, Owner.class);
-        MatcherAssert.assertThat(owner.getFirstName(), Matchers.equalTo(owner2.getFirstName()));
-        MatcherAssert.assertThat(owner.getLastName(), Matchers.equalTo(owner2.getLastName()));
+
+        URI location = restTemplate.postForLocation(restTemplate.getRootUri() + "/api/owner", owner);
+        Owner owner2 = restTemplate.getForObject(location, Owner.class);
+
+        MatcherAssert.assertThat(owner2.getFirstName(), Matchers.equalTo(owner.getFirstName()));
+        MatcherAssert.assertThat(owner2.getLastName(), Matchers.equalTo(owner.getLastName()));
     }
 
     @Test

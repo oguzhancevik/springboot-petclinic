@@ -21,5 +21,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.formLogin().loginPage("/login").failureUrl("/login?loginFailed=true");
 
         http.rememberMe().userDetailsService(userDetailsService);
+
+        http.httpBasic();
+        http.csrf().ignoringAntMatchers("/api/**");
     }
 }
