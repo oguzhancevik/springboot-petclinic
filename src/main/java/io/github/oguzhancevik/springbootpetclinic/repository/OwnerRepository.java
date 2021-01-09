@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OwnerRepositoryJpaImpl extends JpaRepository<Owner, Long> {
+public interface OwnerRepository extends JpaRepository<Owner, Long> {
 
     List<Owner> findByLastName(String lastName);
 }
