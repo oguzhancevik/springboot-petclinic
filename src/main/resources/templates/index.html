@@ -4,4 +4,8 @@
     <title>PetClinic Home Page</title>
 </head>
 Welcome to PetClinic
+<form action="/logout" method="post">
+    <input type="submit" value="logout"/>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+</form>
 </html>
