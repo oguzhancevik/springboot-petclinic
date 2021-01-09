@@ -2,8 +2,8 @@ package io.github.oguzhancevik.springbootpetclinic.service;
 
 import io.github.oguzhancevik.springbootpetclinic.exception.OwnerNotFoundException;
 import io.github.oguzhancevik.springbootpetclinic.model.Owner;
-import io.github.oguzhancevik.springbootpetclinic.repository.OwnerRepositoryJpaImpl;
-import io.github.oguzhancevik.springbootpetclinic.repository.PetRepositoryJpaImpl;
+import io.github.oguzhancevik.springbootpetclinic.repository.OwnerRepository;
+import io.github.oguzhancevik.springbootpetclinic.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -16,17 +16,17 @@ import java.util.Optional;
 @Transactional(rollbackFor = Exception.class)
 public class PetClinicServiceImpl implements PetClinicService {
 
-    private OwnerRepositoryJpaImpl ownerRepository;
+    private OwnerRepository ownerRepository;
 
-    private PetRepositoryJpaImpl petRepository;
+    private PetRepository petRepository;
 
     @Autowired
-    public void setOwnerRepository(OwnerRepositoryJpaImpl ownerRepository) {
+    public void setOwnerRepository(OwnerRepository ownerRepository) {
         this.ownerRepository = ownerRepository;
     }
 
     @Autowired
-    public void setPetRepository(PetRepositoryJpaImpl petRepository) {
+    public void setPetRepository(PetRepository petRepository) {
         this.petRepository = petRepository;
     }
 
