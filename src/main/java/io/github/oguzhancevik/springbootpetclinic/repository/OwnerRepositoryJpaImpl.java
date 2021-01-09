@@ -1,21 +1,13 @@
 package io.github.oguzhancevik.springbootpetclinic.repository;
 
 import io.github.oguzhancevik.springbootpetclinic.model.Owner;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface OwnerRepository {
-
-    List<Owner> findAll();
-
-    Owner findById(Long id);
+@Repository
+public interface OwnerRepositoryJpaImpl extends JpaRepository<Owner, Long> {
 
     List<Owner> findByLastName(String lastName);
-
-    void create(Owner owner);
-
-    Owner update(Owner owner);
-
-    void delete(Long id);
-
 }
