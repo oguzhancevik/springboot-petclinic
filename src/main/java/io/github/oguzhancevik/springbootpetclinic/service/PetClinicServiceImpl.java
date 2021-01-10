@@ -53,13 +53,13 @@ public class PetClinicServiceImpl implements PetClinicService {
     }
 
     @Override
-    public void createOwner(Owner owner) {
-        ownerRepository.save(owner);
+    public Owner createOwner(Owner owner) {
+        return ownerRepository.save(owner);
     }
 
     @Override
-    public void updateOwner(Owner owner) {
-        ownerRepository.save(owner);
+    public Owner updateOwner(Owner owner) {
+        return ownerRepository.save(owner);
     }
 
     @Override
