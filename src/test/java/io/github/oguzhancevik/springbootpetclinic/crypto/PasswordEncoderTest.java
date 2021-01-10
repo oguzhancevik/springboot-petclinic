@@ -6,17 +6,17 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class PasswordEncoderTest {
+class PasswordEncoderTest {
 
     private BCryptPasswordEncoder passwordEncoder;
 
     @BeforeAll
-    public void setUp() {
+    void setUp() {
         passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @Test
-    public void testGenerateEncodedPassword() {
+    void testGenerateEncodedPassword() {
         System.out.println("{bcrypt}" + passwordEncoder.encode("my-secret-password"));
         System.out.println("{bcrypt}" + passwordEncoder.encode("my-secret-password"));
         System.out.println("{bcrypt}" + passwordEncoder.encode("my-secret-password"));

@@ -18,23 +18,19 @@ import java.util.stream.Collectors;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class PetClinicRestControllerTest {
+class PetClinicRestControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
 
-    private final String USER_NAME = "admin";
-
-    private final String PASSWORD = "my-secret-password";
-
     @BeforeEach
-    public void setUp() {
-        restTemplate = restTemplate.withBasicAuth(USER_NAME, PASSWORD);
+    void setUp() {
+        restTemplate = restTemplate.withBasicAuth("admin", "my-secret-password");
     }
 
     @Test
     @Order(1)
-    public void testGetOwnerById() {
+    void testGetOwnerById() {
         ResponseEntity<Owner> response = restTemplate.getForEntity(restTemplate.getRootUri() + "/api/owner/1", Owner.class);
         MatcherAssert.assertThat(response.getStatusCodeValue(), Matchers.equalTo(200));
         MatcherAssert.assertThat(response.getBody().getId(), Matchers.equalTo(1L));
@@ -42,7 +38,7 @@ public class PetClinicRestControllerTest {
 
     @Test
     @Order(2)
-    public void testGetOwnersByLastName() {
+    void testGetOwnersByLastName() {
         ResponseEntity<List> response = restTemplate.getForEntity(restTemplate.getRootUri() + "/api/owner?ln=Marquez", List.class);
         MatcherAssert.assertThat(response.getStatusCode(), Matchers.equalTo(HttpStatus.OK));
         List<Map<String, String>> body = response.getBody();
@@ -52,7 +48,7 @@ public class PetClinicRestControllerTest {
 
     @Test
     @Order(3)
-    public void testGetOwners() {
+    void testGetOwners() {
         ResponseEntity<List> response = restTemplate.getForEntity(restTemplate.getRootUri() + "/api/owners", List.class);
         MatcherAssert.assertThat(response.getStatusCode(), Matchers.equalTo(HttpStatus.OK));
         List<Map<String, String>> body = response.getBody();
@@ -62,7 +58,7 @@ public class PetClinicRestControllerTest {
 
     @Test
     @Order(4)
-    public void testCreateOwner() {
+    void testCreateOwner() {
         Owner owner = new Owner();
         owner.setFirstName("Gregory");
         owner.setLastName("Alvarado");
@@ -76,7 +72,7 @@ public class PetClinicRestControllerTest {
 
     @Test
     @Order(5)
-    public void testUpdateOwner() {
+    void testUpdateOwner() {
         Owner owner = restTemplate.getForObject(restTemplate.getRootUri() + "/api/owner/1", Owner.class);
         MatcherAssert.assertThat(owner.getFirstName(), Matchers.equalTo("John"));
         MatcherAssert.assertThat(owner.getLastName(), Matchers.equalTo("Doe"));
@@ -90,7 +86,7 @@ public class PetClinicRestControllerTest {
 
     @Test
     @Order(6)
-    public void testDeleteOwner() {
+    void testDeleteOwner() {
         ResponseEntity<Void> response = restTemplate.exchange(restTemplate.getRootUri() + "/api/owner/1", HttpMethod.DELETE, null, Void.class);
         MatcherAssert.assertThat(response.getStatusCodeValue(), Matchers.equalTo(200));
         ResponseEntity<Owner> response2 = restTemplate.getForEntity(restTemplate.getRootUri() + "/api/owner/1", Owner.class);
