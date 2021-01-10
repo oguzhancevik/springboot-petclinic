@@ -19,7 +19,7 @@ public class PetClinicController {
     }
 
     @RequestMapping("/login")
-    public String loginPage(){
+    public String loginPage() {
         return "login";
     }
 

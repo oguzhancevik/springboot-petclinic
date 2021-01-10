@@ -13,7 +13,7 @@ public class PetClinicConfiguration {
     private PetClinicProperties petClinicProperties;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         System.out.println("Display owners with pets: " + petClinicProperties.isDisplayOwnersWithPets());
     }
 }
