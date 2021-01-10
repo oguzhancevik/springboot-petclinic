@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class PetClinicRestControllerTest {
@@ -91,6 +93,18 @@ class PetClinicRestControllerTest {
         MatcherAssert.assertThat(response.getStatusCodeValue(), Matchers.equalTo(200));
         ResponseEntity<Owner> response2 = restTemplate.getForEntity(restTemplate.getRootUri() + "/api/owner/1", Owner.class);
         MatcherAssert.assertThat(response2.getStatusCodeValue(), Matchers.equalTo(404));
+    }
+
+    @Test
+    @Order(7)
+    void shouldThrowExceptionWhenAccessByUserWhoDoesNotHaveAdminRole() {
+        assertThrows(Exception.class, () ->
+                restTemplate.withBasicAuth("user1", "my-secret-password")
+                        .getForEntity(restTemplate.getRootUri() + "/api/owners", List.class));
+
+        assertThrows(Exception.class, () ->
+                restTemplate.withBasicAuth("user2", "my-secret-password")
+                        .getForEntity(restTemplate.getRootUri() + "/api/owners", List.class));
     }
 
 }

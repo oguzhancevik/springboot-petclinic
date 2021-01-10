@@ -6,13 +6,13 @@ import io.github.oguzhancevik.springbootpetclinic.service.PetClinicService;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.authentication.TestingAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -26,6 +26,18 @@ class PetClinicIntegrationTest {
 
     @Autowired
     private PetClinicService petClinicService;
+
+    @BeforeEach
+    public void setUp() {
+        TestingAuthenticationToken token =
+                new TestingAuthenticationToken("admin", "my-secret-password", "ROLE_ADMIN");
+        SecurityContextHolder.getContext().setAuthentication(token);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        SecurityContextHolder.clearContext();
+    }
 
     @Test
     void testFindOwners() {
