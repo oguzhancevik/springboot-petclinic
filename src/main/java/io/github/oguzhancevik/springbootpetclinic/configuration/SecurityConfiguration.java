@@ -20,8 +20,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/**/favicon.ico", "/css/**", "js/**", "/images/**", "/login").permitAll();
 
-        http.authorizeRequests().antMatchers("/api/**").hasAnyRole("ADMIN", "EDITOR");
-
         http.authorizeRequests().antMatchers("/actuator/**").hasRole("ADMIN");
 
         http.authorizeRequests().anyRequest().authenticated();
@@ -29,8 +27,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.formLogin().loginPage("/login").failureUrl("/login?loginFailed=true");
 
         http.rememberMe().userDetailsService(userDetailsService);
-
-        http.httpBasic();
-        http.csrf().ignoringAntMatchers("/api/**");
     }
 }
