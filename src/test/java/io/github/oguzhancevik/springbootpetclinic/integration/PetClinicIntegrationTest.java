@@ -14,19 +14,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Transactional
 class PetClinicIntegrationTest {
 
     @Autowired
     private PetClinicService petClinicService;
 
     @Test
-    @Order(1)
     void testFindOwners() {
         List<Owner> owners = petClinicService.findOwners();
         MatcherAssert.assertThat(owners.size(), Matchers.equalTo(4));
@@ -37,7 +38,6 @@ class PetClinicIntegrationTest {
     }
 
     @Test
-    @Order(2)
     void testFindOwnersByLastName() {
         List<Owner> owners = petClinicService.findOwners("Marquez");
         MatcherAssert.assertThat(owners.size(), Matchers.equalTo(2));
@@ -48,7 +48,6 @@ class PetClinicIntegrationTest {
     }
 
     @Test
-    @Order(3)
     void testFindOwnerById() {
         Owner owner = petClinicService.findOwner(1L);
         MatcherAssert.assertThat(owner.getFirstName(), Matchers.equalTo("John"));
@@ -56,13 +55,11 @@ class PetClinicIntegrationTest {
     }
 
     @Test
-    @Order(4)
     void shouldThrowOwnerNotFoundExceptionWhenOwnerNotFound() {
         assertThrows(OwnerNotFoundException.class, () -> petClinicService.findOwner(-1L));
     }
 
     @Test
-    @Order(5)
     void testCreateOwner() {
         Owner owner = new Owner();
         owner.setFirstName("Lydia");
@@ -74,7 +71,6 @@ class PetClinicIntegrationTest {
     }
 
     @Test
-    @Order(6)
     void testUpdateOwner() {
         Owner owner = petClinicService.findOwner(1L);
         MatcherAssert.assertThat(owner.getFirstName(), Matchers.equalTo("John"));
@@ -88,14 +84,12 @@ class PetClinicIntegrationTest {
     }
 
     @Test
-    @Order(7)
     void testDeleteOwner() {
         petClinicService.deleteOwner(1L);
         assertThrows(OwnerNotFoundException.class, () -> petClinicService.findOwner(1L));
     }
 
     @Test
-    @Order(8)
     void shouldThrowEmptyResultDataAccessExceptionWhenDelete() {
         assertThrows(EmptyResultDataAccessException.class, () -> petClinicService.deleteOwner(-1L));
     }
