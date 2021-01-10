@@ -3,7 +3,7 @@
     <meta charset="UTF-8"/>
     <title>PetClinic Home Page</title>
 </head>
-Welcome to PetClinic
+<label th:text="${message}"/>
 <form action="/logout" method="post">
     <input type="submit" value="logout"/>
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>

@@ -1,6 +1,7 @@
 package io.github.oguzhancevik.springbootpetclinic.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -14,7 +15,8 @@ public class PetClinicController {
     }
 
     @RequestMapping("/")
-    public String indexPage() {
+    public String indexPage(Model model) {
+        model.addAttribute("message", "Welcome to PetClinic");
         return "index";
     }
 
