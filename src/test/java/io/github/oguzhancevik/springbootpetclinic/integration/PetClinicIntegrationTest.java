@@ -7,11 +7,11 @@ import org.assertj.core.api.Assertions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import javax.transaction.Transactional;
@@ -68,6 +68,14 @@ class PetClinicIntegrationTest {
         Owner owner2 = petClinicService.findOwner(owner.getId());
         MatcherAssert.assertThat(owner2.getFirstName(), Matchers.equalTo(owner.getFirstName()));
         MatcherAssert.assertThat(owner2.getLastName(), Matchers.equalTo(owner.getLastName()));
+    }
+
+    @Test
+    void shouldThrownDataIntegrityViolationExceptionWhenOwnerNameIsNullOrOwnerLastNameIsNull() {
+        Owner owner = new Owner();
+        owner.setFirstName(null);
+        owner.setLastName(null);
+        assertThrows(DataIntegrityViolationException.class, () -> petClinicService.createOwner(owner));
     }
 
     @Test

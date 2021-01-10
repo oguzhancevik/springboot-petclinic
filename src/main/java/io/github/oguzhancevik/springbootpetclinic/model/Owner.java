@@ -17,8 +17,10 @@ public class Owner {
     @SequenceGenerator(name = "petClinicOwnerSeqGen", sequenceName = "petclinic_sequence", allocationSize = 1)
     private Long id;
 
+    @Column(nullable = false)
     private String firstName;
 
+    @Column(nullable = false)
     private String lastName;
 
     @JsonIgnore

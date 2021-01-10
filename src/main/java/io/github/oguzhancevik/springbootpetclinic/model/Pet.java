@@ -15,8 +15,10 @@ public class Pet {
     @SequenceGenerator(name = "petClinicPetSeqGen", sequenceName = "petclinic_sequence", allocationSize = 1)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private Date birthDate;
 
     @ManyToOne
