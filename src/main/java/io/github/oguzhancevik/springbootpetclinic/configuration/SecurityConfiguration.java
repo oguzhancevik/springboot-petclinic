@@ -18,8 +18,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/**/favicon.ico", "/css/**", "js/**", "/images/**", "/login").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/**/favicon.ico", "/css/**", "js/**", "/images/**", "/login").permitAll();
+
+        http.authorizeRequests().antMatchers("/api/**").hasAnyRole("ADMIN", "EDITOR");
+
+        http.authorizeRequests().antMatchers("/actuator/**").hasRole("ADMIN");
+
+        http.authorizeRequests().anyRequest().authenticated();
 
         http.formLogin().loginPage("/login").failureUrl("/login?loginFailed=true");
 
