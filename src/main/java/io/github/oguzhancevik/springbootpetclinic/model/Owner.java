@@ -2,6 +2,7 @@ package io.github.oguzhancevik.springbootpetclinic.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import java.util.Set;
 @Entity
 @Table
 @Data
+@NoArgsConstructor
 public class Owner {
 
     @Id
@@ -26,6 +28,11 @@ public class Owner {
     @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private Set<Pet> pets = new HashSet<>();
+
+    public Owner(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
     @Override
     public String toString() {
