@@ -61,9 +61,7 @@ class PetClinicRestControllerTest {
     @Test
     @Order(4)
     void testCreateOwner() {
-        Owner owner = new Owner();
-        owner.setFirstName("Gregory");
-        owner.setLastName("Alvarado");
+        Owner owner = new Owner("Gregory", "Alvarado");
 
         URI location = restTemplate.postForLocation(restTemplate.getRootUri() + "/api/owner", owner);
         Owner owner2 = restTemplate.getForObject(location, Owner.class);
