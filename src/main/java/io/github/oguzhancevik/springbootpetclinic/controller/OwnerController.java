@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("owners")
 public class OwnerController {
 
     private PetClinicService petClinicService;
@@ -19,32 +21,32 @@ public class OwnerController {
         this.petClinicService = petClinicService;
     }
 
-    @GetMapping("/owners")
+    @GetMapping
     public String ownersPage(Model model) {
         model.addAttribute("owners", petClinicService.findOwners());
         return "list-owner";
     }
 
-    @GetMapping("/owners/new")
+    @GetMapping("/new")
     public String createOwnerPage(Model model) {
         model.addAttribute("owner", new Owner());
         return "create-owner";
     }
 
-    @PostMapping("/owners/new")
+    @PostMapping("/new")
     public String createOwner(Owner owner) {
         petClinicService.saveOwner(owner);
         return "redirect:/owners";
     }
 
-    @GetMapping("/owners/{id}")
+    @GetMapping("/{id}")
     public String editOwnerPage(@PathVariable("id") Long id, Model model) {
         Owner owner = petClinicService.findOwner(id);
         model.addAttribute("owner", owner);
         return "create-owner";
     }
 
-    @GetMapping("/owners/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteOwner(@PathVariable("id") Long id) {
         petClinicService.deleteOwner(id);
         return "redirect:/owners";
