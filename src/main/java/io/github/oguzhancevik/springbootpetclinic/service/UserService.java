@@ -1,5 +1,6 @@
 package io.github.oguzhancevik.springbootpetclinic.service;
 
+import io.github.oguzhancevik.springbootpetclinic.model.Authority;
 import io.github.oguzhancevik.springbootpetclinic.model.User;
 import io.github.oguzhancevik.springbootpetclinic.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,11 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
         }
 
-        UserDetails userDetails = org.springframework.security.core.userdetails.User
+        return org.springframework.security.core.userdetails.User
                 .withUsername(username)
                 .password(user.getPassword())
                 .disabled(!user.isEnabled())
-                .authorities(user.getAuthorities().stream().map(a -> a.getAuthority()).toArray(String[]::new)).build();
-        return userDetails;
+                .authorities(user.getAuthorities().stream().map(Authority::getAuthority).toArray(String[]::new))
+                .build();
     }
 }

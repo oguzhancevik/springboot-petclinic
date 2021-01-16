@@ -48,7 +48,7 @@ public class PetClinicRestController {
             Link create = WebMvcLinkBuilder.linkTo(PetClinicRestController.class).slash("/owner").withRel("create");
             Link update = WebMvcLinkBuilder.linkTo(PetClinicRestController.class).slash("/owner/" + id).withRel("update");
             Link delete = WebMvcLinkBuilder.linkTo(PetClinicRestController.class).slash("/owner/" + id).withRel("delete");
-            EntityModel<Owner> resource = new EntityModel<>(owner, self, create, update, delete);
+            EntityModel<Owner> resource = EntityModel.of(owner, self, create, update, delete);
             return ResponseEntity.ok(resource);
         } catch (OwnerNotFoundException e) {
             return ResponseEntity.notFound().build();

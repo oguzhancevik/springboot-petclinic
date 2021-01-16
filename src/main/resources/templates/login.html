@@ -1,17 +1,30 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>PetClinic Login Page</title>
 </head>
 PetClinic Login Page
 <form action="/login" method="post">
-    username: <input type="text" name="username"/><br/>
-    password: <input type="password" name="password"><br/>
-    remember me: <input type="checkbox" name="remember-me"/>
+
+    <label>
+        username:
+        <input type="text" name="username"/>
+    </label><br/>
+
+    <label>
+        password:
+        <input type="password" name="password">
+    </label><br/>
+
+    <label>
+        remember me:
+        <input type="checkbox" name="remember-me"/>
+    </label>
+
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <input type="submit" value="Login"/>
-    <font color="red">
-        <label th:if="${param.loginFailed != null}">Login Failed!</label>
-    </font>
+
+    <span style="color:red"><label th:if="${param.loginFailed != null}">Login Failed!</label></span>
+
 </form>
 </html>

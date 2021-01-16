@@ -48,7 +48,7 @@ public class PetClinicServiceImpl implements PetClinicService {
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Owner findOwner(Long id) throws OwnerNotFoundException {
         Optional<Owner> owner = ownerRepository.findById(id);
-        if (!owner.isPresent()) {
+        if (owner.isEmpty()) {
             throw new OwnerNotFoundException("Owner not found with id :" + id);
         }
         return owner.get();

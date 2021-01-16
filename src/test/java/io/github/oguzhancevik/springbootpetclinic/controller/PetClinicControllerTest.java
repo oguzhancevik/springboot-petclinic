@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 @WithMockUser(username = "admin", password = "my-secret-password", authorities = {"USER", "EDITOR", "ADMIN"})
-public class PetClinicWebMvcTest {
+public class PetClinicControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

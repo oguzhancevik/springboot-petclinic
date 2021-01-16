@@ -9,8 +9,12 @@ import javax.annotation.PostConstruct;
 @Configuration
 public class PetClinicConfiguration {
 
+    private final PetClinicProperties petClinicProperties;
+
     @Autowired
-    private PetClinicProperties petClinicProperties;
+    public PetClinicConfiguration(PetClinicProperties petClinicProperties) {
+        this.petClinicProperties = petClinicProperties;
+    }
 
     @PostConstruct
     public void init() {

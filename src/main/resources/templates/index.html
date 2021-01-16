@@ -1,9 +1,10 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>PetClinic Home Page</title>
 </head>
-<label th:text="${message}"/>
+<label th:text="${message}"></label> <br/>
+<a href="/owners">List Owners</a> <br/>
 <form action="/logout" method="post">
     <input type="submit" value="logout"/>
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
