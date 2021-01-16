@@ -1,16 +1,17 @@
 package io.github.oguzhancevik.springbootpetclinic.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.oguzhancevik.springbootpetclinic.model.Owner;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -67,33 +68,6 @@ public class OwnerControllerTest {
 
     @Test
     @Order(3)
-    @Disabled("Disabled because currently CSRF is enable")
-    void testCreateOwner() throws Exception {
-        Owner owner = new Owner("Gerardo", "Johnson");
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post(baseRequestMapping + "/new")
-                .content(new ObjectMapper().writeValueAsString(owner))
-                .contentType(MediaType.APPLICATION_JSON);
-        mockMvc.perform(requestBuilder);
-
-        requestBuilder = MockMvcRequestBuilders.get(baseRequestMapping);
-        ResultActions resultActions = mockMvc.perform(requestBuilder);
-        MvcResult mvcResult = resultActions.andReturn();
-        ModelAndView mav = mvcResult.getModelAndView();
-
-        MatcherAssert.assertThat(mvcResult.getResponse().getStatus(), Matchers.equalTo(HttpStatus.OK.value()));
-        MatcherAssert.assertThat(mav.getViewName(), Matchers.equalTo("list-owner"));
-        MatcherAssert.assertThat(mav.getModel().containsKey("owners"), Matchers.equalTo(true));
-
-        List<Owner> owners = (List<Owner>) mav.getModel().get("owners");
-        Assertions.assertThat(owners).extracting("firstName")
-                .contains("John", "Arturo", "Lance", "Andres", "Gerardo").doesNotContain("Gianna");
-        Assertions.assertThat(owners).extracting("lastName")
-                .contains("Doe", "Marquez", "Tyler", "Johnson").doesNotContain("Romero");
-    }
-
-    @Test
-    @Order(4)
     void testEditOwnerPage() throws Exception {
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(baseRequestMapping + "/1");
         ResultActions resultActions = mockMvc.perform(requestBuilder);
@@ -111,7 +85,7 @@ public class OwnerControllerTest {
     }
 
     @Test
-    @Order(5)
+    @Order(4)
     void testDeleteOwner() throws Exception {
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(baseRequestMapping + "/delete/1");
         ResultActions resultActions = mockMvc.perform(requestBuilder);

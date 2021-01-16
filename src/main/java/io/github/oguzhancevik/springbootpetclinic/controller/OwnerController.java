@@ -5,7 +5,10 @@ import io.github.oguzhancevik.springbootpetclinic.service.PetClinicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("owners")
@@ -30,8 +33,8 @@ public class OwnerController {
         return "create-owner";
     }
 
-    @PostMapping("/new")
-    public String createOwner(@RequestBody Owner owner) {
+    @PostMapping(value = "/new")
+    public String createOwner(Owner owner) {
         petClinicService.saveOwner(owner);
         return "redirect:/owners";
     }

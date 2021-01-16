@@ -1,8 +1,7 @@
-package io.github.oguzhancevik.springbootpetclinic.integration;
+package io.github.oguzhancevik.springbootpetclinic.service;
 
 import io.github.oguzhancevik.springbootpetclinic.exception.OwnerNotFoundException;
 import io.github.oguzhancevik.springbootpetclinic.model.Owner;
-import io.github.oguzhancevik.springbootpetclinic.service.PetClinicService;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -22,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Transactional
-class PetClinicIntegrationTest {
+class PetClinicServiceTest {
 
     @Autowired
     private PetClinicService petClinicService;
