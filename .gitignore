@@ -5,6 +5,7 @@ mvn*
 .mvn/*
 *log
 *.gz
+*.xml
 
 ### STS ###
 .apt_generated
