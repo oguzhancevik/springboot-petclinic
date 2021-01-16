@@ -58,7 +58,7 @@ public class PetClinicRestController {
     @PostMapping("/owner")
     public ResponseEntity<URI> createOwner(@RequestBody Owner owner) {
         try {
-            petClinicService.createOwner(owner);
+            petClinicService.saveOwner(owner);
             Long id = owner.getId();
             URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
             return ResponseEntity.created(location).build();
@@ -73,7 +73,7 @@ public class PetClinicRestController {
             Owner owner = petClinicService.findOwner(id);
             owner.setFirstName(ownerRequest.getFirstName());
             owner.setLastName(ownerRequest.getLastName());
-            petClinicService.updateOwner(owner);
+            petClinicService.saveOwner(owner);
             return ResponseEntity.ok().build();
         } catch (OwnerNotFoundException e) {
             return ResponseEntity.notFound().build();

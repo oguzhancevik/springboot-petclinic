@@ -76,7 +76,7 @@ class PetClinicIntegrationTest {
         Owner owner = new Owner();
         owner.setFirstName("Lydia");
         owner.setLastName("Quinn");
-        petClinicService.createOwner(owner);
+        petClinicService.saveOwner(owner);
         Owner owner2 = petClinicService.findOwner(owner.getId());
         MatcherAssert.assertThat(owner2.getFirstName(), Matchers.equalTo(owner.getFirstName()));
         MatcherAssert.assertThat(owner2.getLastName(), Matchers.equalTo(owner.getLastName()));
@@ -87,7 +87,7 @@ class PetClinicIntegrationTest {
         Owner owner = new Owner();
         owner.setFirstName(null);
         owner.setLastName(null);
-        assertThrows(DataIntegrityViolationException.class, () -> petClinicService.createOwner(owner));
+        assertThrows(DataIntegrityViolationException.class, () -> petClinicService.saveOwner(owner));
     }
 
     @Test
@@ -97,7 +97,7 @@ class PetClinicIntegrationTest {
         MatcherAssert.assertThat(owner.getLastName(), Matchers.equalTo("Doe"));
         owner.setFirstName("Stefanie");
         owner.setLastName("Pope");
-        petClinicService.updateOwner(owner);
+        petClinicService.saveOwner(owner);
         Owner owner2 = petClinicService.findOwner(1L);
         MatcherAssert.assertThat(owner2.getFirstName(), Matchers.equalTo(owner.getFirstName()));
         MatcherAssert.assertThat(owner2.getLastName(), Matchers.equalTo(owner.getLastName()));
