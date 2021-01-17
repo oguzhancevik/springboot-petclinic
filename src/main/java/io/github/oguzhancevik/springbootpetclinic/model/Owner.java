@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,9 +20,11 @@ public class Owner {
     @SequenceGenerator(name = "petClinicOwnerSeqGen", sequenceName = "petclinic_sequence", allocationSize = 1)
     private Long id;
 
+    @NotEmpty
     @Column(nullable = false)
     private String firstName;
 
+    @NotEmpty
     @Column(nullable = false)
     private String lastName;
 
