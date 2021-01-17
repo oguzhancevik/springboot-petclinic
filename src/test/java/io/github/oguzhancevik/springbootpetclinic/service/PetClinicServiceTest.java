@@ -8,12 +8,13 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -25,6 +26,9 @@ class PetClinicServiceTest {
 
     @Autowired
     private PetClinicService petClinicService;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @BeforeEach
     public void setUp() {
@@ -80,9 +84,10 @@ class PetClinicServiceTest {
     }
 
     @Test
-    void shouldThrownDataIntegrityViolationExceptionWhenOwnerNameIsNullOrOwnerLastNameIsNull() {
+    void shouldThrownConstraintViolationExceptionWhenOwnerNameIsNullOrOwnerLastNameIsNull() {
         Owner owner = new Owner(null, null);
-        assertThrows(DataIntegrityViolationException.class, () -> petClinicService.saveOwner(owner));
+        petClinicService.saveOwner(owner);
+        assertThrows(ConstraintViolationException.class, () -> entityManager.flush());
     }
 
     @Test
