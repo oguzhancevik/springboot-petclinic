@@ -8,12 +8,7 @@ import java.util.Date;
 @Entity
 @Table
 @Data
-public class Pet {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "petClinicPetSeqGen")
-    @SequenceGenerator(name = "petClinicPetSeqGen", sequenceName = "petclinic_sequence", allocationSize = 1)
-    private Long id;
+public class Pet extends BaseModel {
 
     @Column(nullable = false)
     private String name;

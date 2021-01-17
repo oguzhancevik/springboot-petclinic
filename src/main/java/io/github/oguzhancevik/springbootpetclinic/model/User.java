@@ -12,7 +12,7 @@ import java.util.Set;
 @Table(name = "users")
 @Getter
 @Setter
-public class User {
+public class User extends BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "petClinicUserSeqGen")

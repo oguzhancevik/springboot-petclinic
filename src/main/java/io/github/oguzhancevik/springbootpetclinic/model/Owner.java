@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,12 +16,7 @@ import java.util.Set;
 @Table
 @Data
 @NoArgsConstructor
-public class Owner {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "petClinicOwnerSeqGen")
-    @SequenceGenerator(name = "petClinicOwnerSeqGen", sequenceName = "petclinic_sequence", allocationSize = 1)
-    private Long id;
+public class Owner extends BaseModel {
 
     @NotEmpty
     @Column(nullable = false)
@@ -40,7 +38,7 @@ public class Owner {
     @Override
     public String toString() {
         return "Owner{" +
-                "id=" + id +
+                "id=" + super.getId() +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
