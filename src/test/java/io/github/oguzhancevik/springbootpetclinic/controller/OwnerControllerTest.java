@@ -4,15 +4,13 @@ import io.github.oguzhancevik.springbootpetclinic.model.Owner;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
@@ -25,7 +23,7 @@ import java.util.List;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 @WithMockUser(username = "admin", password = "my-secret-password", authorities = {"ROLE_ADMIN"})
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class OwnerControllerTest {
 
     @Autowired
@@ -34,7 +32,6 @@ public class OwnerControllerTest {
     private final String baseRequestMapping = "/owners";
 
     @Test
-    @Order(1)
     void testOwnersPage() throws Exception {
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(baseRequestMapping);
         ResultActions resultActions = mockMvc.perform(requestBuilder);
@@ -53,7 +50,6 @@ public class OwnerControllerTest {
     }
 
     @Test
-    @Order(2)
     void testCreateOwnerPage() throws Exception {
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(baseRequestMapping + "/new");
         ResultActions resultActions = mockMvc.perform(requestBuilder);
@@ -67,7 +63,6 @@ public class OwnerControllerTest {
     }
 
     @Test
-    @Order(3)
     void testEditOwnerPage() throws Exception {
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(baseRequestMapping + "/1");
         ResultActions resultActions = mockMvc.perform(requestBuilder);
@@ -85,7 +80,6 @@ public class OwnerControllerTest {
     }
 
     @Test
-    @Order(4)
     void testDeleteOwner() throws Exception {
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(baseRequestMapping + "/delete/1");
         ResultActions resultActions = mockMvc.perform(requestBuilder);

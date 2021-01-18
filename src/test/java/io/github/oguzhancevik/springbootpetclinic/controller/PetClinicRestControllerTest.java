@@ -3,13 +3,15 @@ package io.github.oguzhancevik.springbootpetclinic.controller;
 import io.github.oguzhancevik.springbootpetclinic.model.Owner;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.net.URI;
 import java.util.List;
@@ -19,7 +21,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class PetClinicRestControllerTest {
 
     @Autowired
@@ -31,7 +33,6 @@ class PetClinicRestControllerTest {
     }
 
     @Test
-    @Order(1)
     void testGetOwnerById() {
         ResponseEntity<Owner> response = restTemplate.getForEntity(restTemplate.getRootUri() + "/api/owner/1", Owner.class);
         MatcherAssert.assertThat(response.getStatusCodeValue(), Matchers.equalTo(200));
@@ -39,7 +40,6 @@ class PetClinicRestControllerTest {
     }
 
     @Test
-    @Order(2)
     void testGetOwnersByLastName() {
         ResponseEntity<List> response = restTemplate.getForEntity(restTemplate.getRootUri() + "/api/owner?ln=Marquez", List.class);
         MatcherAssert.assertThat(response.getStatusCode(), Matchers.equalTo(HttpStatus.OK));
@@ -49,7 +49,6 @@ class PetClinicRestControllerTest {
     }
 
     @Test
-    @Order(3)
     void testGetOwners() {
         ResponseEntity<List> response = restTemplate.getForEntity(restTemplate.getRootUri() + "/api/owners", List.class);
         MatcherAssert.assertThat(response.getStatusCode(), Matchers.equalTo(HttpStatus.OK));
@@ -59,7 +58,6 @@ class PetClinicRestControllerTest {
     }
 
     @Test
-    @Order(4)
     void testCreateOwner() {
         Owner owner = new Owner("Gregory", "Alvarado");
 
@@ -71,7 +69,6 @@ class PetClinicRestControllerTest {
     }
 
     @Test
-    @Order(5)
     void testUpdateOwner() {
         Owner owner = restTemplate.getForObject(restTemplate.getRootUri() + "/api/owner/1", Owner.class);
         MatcherAssert.assertThat(owner.getFirstName(), Matchers.equalTo("John"));
@@ -85,7 +82,6 @@ class PetClinicRestControllerTest {
     }
 
     @Test
-    @Order(6)
     void testDeleteOwner() {
         ResponseEntity<Void> response = restTemplate.exchange(restTemplate.getRootUri() + "/api/owner/1", HttpMethod.DELETE, null, Void.class);
         MatcherAssert.assertThat(response.getStatusCodeValue(), Matchers.equalTo(200));
@@ -94,7 +90,6 @@ class PetClinicRestControllerTest {
     }
 
     @Test
-    @Order(7)
     void shouldThrowExceptionWhenAccessByUserWhoDoesNotHaveAdminRole() {
         assertThrows(Exception.class, () ->
                 restTemplate.withBasicAuth("user1", "my-secret-password")
