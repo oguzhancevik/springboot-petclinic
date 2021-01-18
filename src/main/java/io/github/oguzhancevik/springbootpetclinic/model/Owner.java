@@ -3,11 +3,10 @@ package io.github.oguzhancevik.springbootpetclinic.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +27,7 @@ public class Owner extends BaseModel {
 
     @JsonIgnore
     @OneToMany(mappedBy = "owner")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Pet> pets = new HashSet<>();
 
     public Owner(String firstName, String lastName) {
